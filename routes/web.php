@@ -26,3 +26,10 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('channels/{channel}/edit', [\App\Http\Controllers\ChannelController::class, 'edit'])->name('channels.edit');
+    Route::put('channels/{channel}/update', [\App\Http\Controllers\ChannelController::class, 'update'])->name('channels.update');
+    Route::get('channels/{channel}', [\App\Http\Controllers\ChannelController::class, 'show'])->name('channels.show');
+});
+//Route::resource('channels', \App\Http\Controllers\ChannelController::class);
